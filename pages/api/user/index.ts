@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import { connect } from "../../../utils/connection"
-import { PostType, ResponseFuncs } from "../../../utils/types"
+import { UserType, ResponseFuncs } from "../../../utils/types"
 import  User from "../../../models/User"
 import bcrypt from 'bcrypt'
 const saltRounds = 10;
@@ -16,12 +16,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   // Potential Responses
   const handleCase: ResponseFuncs = {
     // RESPONSE FOR GET REQUESTS
-    GET: async (req: NextApiRequest, res: NextApiResponse<PostType[] | void>) => {
+    GET: async (req: NextApiRequest, res: NextApiResponse<UserType[] | void>) => {
       await connect() // connect to database
       res.json(await User.find({}).select('_id email').catch(catcher))
     },
     // RESPONSE POST REQUESTS
-    POST: async (req: NextApiRequest, res: NextApiResponse<PostType>) => {
+    POST: async (req: NextApiRequest, res: NextApiResponse<UserType>) => {
       const email = req.body.email;
       const password = req.body.password;
 
